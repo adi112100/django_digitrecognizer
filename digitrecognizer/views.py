@@ -12,7 +12,7 @@ from keras import models
 # Create your views here.
 
 def index(request):
-  clf = joblib.load('./staticfiles/finalized_model.sav')
+  clf = joblib.load('./static/finalized_model.sav')
   return render(request, "index2.html")
 
 def result(request):
@@ -26,13 +26,13 @@ def result(request):
     smaller = cv2.resize(img, (28, 28))
     gray = cv2.cvtColor(smaller, cv2.COLOR_BGR2GRAY)
     resize_gray = gray.reshape(1,-1) 
-    clf = joblib.load('./staticfiles/finalized_model.sav')
+    clf = joblib.load('./static/finalized_model.sav')
     ans = clf.predict(resize_gray)
     log_proba = clf.predict_log_proba(resize_gray)
     proba = clf.predict_proba(resize_gray)
 
     # keras model
-    model = models.load_model("./staticfiles/model_img_augmentation.h5")
+    model = models.load_model("./static/model_img_augmentation.h5")
     pred = gray/255
     
     pred = pred.reshape(1,28,28,1)
